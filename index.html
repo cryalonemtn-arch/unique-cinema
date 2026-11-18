@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09090d">
+<title>UNIQUE — Anime, Series & Movies</title>
+<style>
+:root{--bg:#09090d;--panel:#12121a;--panel2:#191925;--text:#f5f3fa;--muted:#9693a5;--accent:#a78bfa;--line:#292638}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:0 22px}
+header{position:sticky;top:0;z-index:5;background:#09090deF;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff12}
+.nav{height:72px;display:flex;align-items:center;gap:28px}.logo{font-size:24px;font-weight:900;letter-spacing:3px;color:white;text-decoration:none}.logo span{color:var(--accent)}
+nav{display:flex;gap:22px}nav a{color:var(--muted);text-decoration:none;font-size:14px}nav a:hover{color:white}
+.search{margin-left:auto;position:relative}.search input{width:230px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 14px 11px 38px;color:white;outline:none}.search:before{content:"⌕";position:absolute;left:13px;top:5px;color:var(--muted);font-size:24px}
+.hero{margin:28px 0 34px;min-height:340px;border-radius:24px;overflow:hidden;position:relative;background:linear-gradient(90deg,#11101b 0%,#171326dd 48%,#17132655),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=85') center/cover;display:flex;align-items:end;padding:42px}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#09090d 0%,transparent 55%);pointer-events:none}.hero-content{position:relative;z-index:1;max-width:550px}.eyebrow{color:var(--accent);font-weight:800;font-size:11px;letter-spacing:2.5px}.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.02;margin:12px 0}.hero p{color:#d1cdda;max-width:470px}.actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:12px 18px;font-weight:750}.primary{background:var(--accent);color:#171020}.secondary{background:#ffffff18;color:white;border:1px solid #ffffff25}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:30px 0 16px}.section-head h2{font-size:21px;margin:0}.section-head small{color:var(--muted)}
+.filters{display:flex;gap:8px;overflow:auto;padding-bottom:8px}.filter{white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:30px;padding:8px 15px}.filter.active{background:#a78bfa20;border-color:var(--accent);color:#d9ccff}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:17px}.card{min-width:0;cursor:pointer}.poster{aspect-ratio:2/3;border-radius:14px;overflow:hidden;background:var(--panel2);position:relative;border:1px solid #ffffff10}.poster img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}.card:hover img{transform:scale(1.05)}.tag{position:absolute;top:9px;left:9px;background:#09090dcc;border:1px solid #ffffff25;border-radius:7px;padding:4px 7px;font-size:10px}.card h3{font-size:14px;margin:9px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:12px;color:var(--muted)}
+.empty{display:none;color:var(--muted);padding:30px 0}.footer{margin-top:60px;padding:25px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+.modal{display:none;position:fixed;inset:0;z-index:10;background:#000c;backdrop-filter:blur(8px);padding:18px;overflow:auto}.modal.open{display:flex;align-items:center;justify-content:center}.dialog{width:min(760px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;position:relative}.close{position:absolute;right:16px;top:12px;background:none;border:0;color:white;font-size:28px}.player{width:100%;aspect-ratio:16/9;background:#050507;border-radius:12px;margin:16px 0;display:grid;place-items:center;color:var(--muted);text-align:center;padding:20px}.player video{width:100%;height:100%;object-fit:contain}.urlrow{display:flex;gap:8px}.urlrow input{min-width:0;flex:1;background:#09090d;border:1px solid var(--line);border-radius:9px;color:white;padding:10px}.note{color:var(--muted);font-size:12px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}nav{display:none}.hero{min-height:300px;padding:25px}.search input{width:180px}}
+@media(max-width:520px){.wrap{padding:0 15px}.nav{height:62px;gap:12px}.logo{font-size:20px}.search input{width:145px;font-size:12px;padding:10px 8px 10px 31px}.hero{margin:18px 0 26px;min-height:285px;padding:20px}.hero p{font-size:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.section-head h2{font-size:18px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="logo" href="#">UNI<span>Q</span>UE.</a>
+<nav><a href="#catalog">Главная</a><a href="#catalog" data-kind="Аниме">Аниме</a><a href="#catalog" data-kind="Сериал">Сериалы</a><a href="#catalog" data-kind="Фильм">Фильмы</a></nav>
+<div class="search"><input id="search" type="search" placeholder="Поиск..." aria-label="Поиск"></div>
+<button class="btn secondary" style="padding:9px 13px" onclick="openAuth()">Войти</button>
+</div></header>
+<main class="wrap">
+<section class="hero"><div class="hero-content">
+<div class="eyebrow">ТВОЯ СЛЕДУЮЩАЯ ИСТОРИЯ НАЧИНАЕТСЯ ЗДЕСЬ</div>
+<h1>Смотри.<br>Открывай новое.</h1>
+<p>Аниме, сериалы и фильмы — собраны в одном месте. Выбирай историю и погружайся в неё.</p>
+<div class="actions"><button class="btn primary" onclick="document.querySelector('#catalog').scrollIntoView({behavior:'smooth'})">Открыть каталог　→</button><button class="btn secondary" onclick="openPlayer('Добавить своё видео')">Мой видеоплеер</button></div>
+</div></section>
+<section id="catalog">
+<div class="section-head"><h2>Каталог</h2><small id="count"></small></div>
+<div class="filters" id="filters"><button class="filter active" data-filter="Все">Все</button><button class="filter" data-filter="Аниме">Аниме</button><button class="filter" data-filter="Сериал">Сериалы</button><button class="filter" data-filter="Фильм">Фильмы</button></div>
+<div class="grid" id="grid"></div><div class="empty" id="empty">Ничего не найдено. Попробуй другой запрос.</div>
+</section>
+</main>
+<footer class="wrap footer">© 2026 UNIQUE. Демоверсия интерфейса. Размещай только видео, на которые у тебя есть права или разрешение.</footer>
+<div class="modal" id="authModal" onclick="if(event.target===this)closeAuth()"><div class="dialog" style="max-width:430px">
+<button class="close" onclick="closeAuth()" aria-label="Закрыть">×</button>
+<div class="eyebrow">WELCOME TO UNIQUE</div><h2>Вход или регистрация</h2>
+<p class="note">Выбери способ входа. Для настоящей авторизации нужно подключить ключи Google OAuth и Telegram Login в настройках проекта.</p>
+<button class="btn secondary" style="width:100%;margin:8px 0" onclick="startGoogleLogin()">◎ Продолжить с Google</button>
+<button class="btn secondary" style="width:100%;margin:8px 0" onclick="providerInfo('Telegram')">➤ Продолжить с Telegram</button>
+<div id="authMessage" class="note" style="margin-top:14px"></div>
+<div id="userProfile" style="display:none;margin-top:16px;padding:12px;background:#09090d;border:1px solid var(--line);border-radius:12px">
+ <div style="display:flex;align-items:center;gap:12px"><img id="userPhoto" alt="" style="width:42px;height:42px;border-radius:50%;object-fit:cover"><div><b id="userName"></b><div id="userEmail" class="note"></div></div></div>
+ <button class="btn secondary" style="margin-top:12px" onclick="signOutGoogle()">Выйти</button>
+</div>
+</div></div>
+<div class="modal" id="modal" onclick="if(event.target===this)closePlayer()"><div class="dialog">
+<button class="close" onclick="closePlayer()" aria-label="Закрыть">×</button><div class="eyebrow">UNIQUE PLAYER</div><h2 id="playerTitle">Просмотр</h2>
+<div class="player" id="playerArea">Выбери видеофайл или вставь прямую ссылку на видео, которое разрешено размещать.</div>
+<div class="urlrow"><input id="videoUrl" placeholder="Прямая ссылка на видео (.mp4, .webm)"><button class="btn primary" onclick="loadUrl()">Открыть</button></div>
+<p class="note">Плеер поддерживает прямые ссылки на совместимые видеофайлы. Ссылки на страницы сторонних сайтов могут не воспроизводиться.</p>
+<label class="btn secondary" style="display:inline-block;margin-top:8px">Выбрать видеофайл <input type="file" accept="video/*" hidden onchange="loadFile(event)"></label>
+</div></div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script>
+/* 1) Создай проект Firebase и Web App.
+   2) Вставь сюда значения из Firebase Console → Project settings → Your apps.
+   3) Включи Google: Authentication → Sign-in method → Google.
+   Не вставляй сюда приватные ключи service account. */
+const firebaseConfig = {
+  apiKey: "AIzaSyCf-UAiH_HniDMI0MbfMwOiKJQjR1sDGUY",
+  authDomain: "unique-ee035.firebaseapp.com",
+  projectId: "unique-ee035",
+  appId: "1:380815499609:web:e8b219593d1bb5612fac48"
+};
+let firebaseReady = false;
+try {
+ if (firebaseConfig.apiKey !== "ВСТАВЬ_API_KEY" &&
+     firebaseConfig.projectId !== "ВСТАВЬ_PROJECT_ID") {
+   firebase.initializeApp(firebaseConfig);
+   firebaseReady = true;
+   firebase.auth().onAuthStateChanged(user => showGoogleUser(user));
+   firebase.auth().getRedirectResult().catch(err => {
+     document.querySelector('#authMessage').textContent = authError(err);
+   });
+ }
+} catch(e) {
+ console.error(e);
+}
+function startGoogleLogin(){
+ if(!firebaseReady){
+  document.querySelector('#authMessage').textContent =
+   'Сначала настрой Firebase и вставь конфигурацию проекта в код. Инструкция ниже.';
+  return;
+ }
+ const provider = new firebase.auth.GoogleAuthProvider();
+ firebase.auth().signInWithRedirect(provider);
+}
+function showGoogleUser(user){
+ const profile=document.querySelector('#userProfile');
+ if(user){
+  document.querySelector('#userName').textContent=user.displayName||'Пользователь UNIQUE';
+  document.querySelector('#userEmail').textContent=user.email||'';
+  const photo=document.querySelector('#userPhoto');
+  if(user.photoURL){photo.src=user.photoURL;photo.style.display='block'}else{photo.style.display='none'}
+  profile.style.display='block';
+  document.querySelector('#authMessage').textContent='Вы вошли в UNIQUE.';
+ }else{
+  profile.style.display='none';
+ }
+}
+function signOutGoogle(){
+ if(firebaseReady) firebase.auth().signOut().then(()=>{
+  document.querySelector('#authMessage').textContent='Вы вышли из аккаунта.';
+ });
+}
+function authError(err){
+ const map={
+  'auth/unauthorized-domain':'Домен сайта не добавлен в список разрешённых доменов Firebase.',
+  'auth/operation-not-allowed':'В Firebase не включён вход через Google.',
+  'auth/network-request-failed':'Проверь подключение к интернету и попробуй ещё раз.'
+ };
+ return map[err.code]||'Не удалось выполнить вход. Проверь настройки Firebase и попробуй снова.';
+}
+const items=[
+ {title:"Твоё первое аниме",kind:"Аниме",year:"2026",desc:"Добавь описание и постер",img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80"},
+ {title:"Ночная история",kind:"Сериал",year:"2025",desc:"Загадочная история",img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"},
+ {title:"За горизонтом",kind:"Фильм",year:"2024",desc:"Приключение начинается",img:"https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=600&q=80"},
+ {title:"Мир приключений",kind:"Аниме",year:"2025",desc:"Новый мир ждёт",img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"},
+ {title:"Последний эпизод",kind:"Сериал",year:"2026",desc:"История продолжается",img:"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80"}
+];
+let filter="Все";
+function render(){const q=document.querySelector('#search').value.toLowerCase();const found=items.filter(x=>(filter==="Все"||x.kind===filter)&&(x.title+" "+x.kind+" "+x.desc).toLowerCase().includes(q));document.querySelector('#grid').innerHTML=found.map((x,i)=>`<article class="card" onclick="openPlayer('${x.title.replace(/'/g,"\\'")}')"><div class="poster"><img src="${x.img}" alt="${x.title}" loading="lazy"><span class="tag">${x.kind}</span></div><h3>${x.title}</h3><div class="meta">${x.year} · ${x.desc}</div></article>`).join('');document.querySelector('#empty').style.display=found.length?'none':'block';document.querySelector('#count').textContent=found.length+' материалов'}
+document.querySelector('#search').addEventListener('input',render);
+document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()}));
+document.querySelectorAll('nav a[data-kind]').forEach(a=>a.addEventListener('click',()=>{filter=a.dataset.kind;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x.dataset.filter===filter));render()}));
+function openAuth(){document.querySelector('#authModal').classList.add('open')}
+function closeAuth(){document.querySelector('#authModal').classList.remove('open')}
+function providerInfo(provider){
+ const msg = provider==='Google'
+ ? 'Google-вход пока не подключён. Для запуска нужен Google OAuth Client ID и настройка разрешённого домена.'
+ : 'Telegram-вход пока не подключён. Для запуска нужен бот Telegram и его настройка для Login Widget.';
+ document.querySelector('#authMessage').textContent=msg;
+}
+function openPlayer(title){document.querySelector('#playerTitle').textContent=title;document.querySelector('#modal').classList.add('open')}
+function closePlayer(){document.querySelector('#modal').classList.remove('open');document.querySelector('#playerArea').innerHTML='Выбери видеофайл или вставь прямую ссылку на видео, которое разрешено размещать.'}
+function loadUrl(){const u=document.querySelector('#videoUrl').value.trim();if(!u)return;const v=document.createElement('video');v.controls=true;v.playsInline=true;v.src=u;document.querySelector('#playerArea').replaceChildren(v);v.play().catch(()=>{})}
+function loadFile(e){const f=e.target.files[0];if(!f)return;const v=document.createElement('video');v.controls=true;v.playsInline=true;v.src=URL.createObjectURL(f);document.querySelector('#playerArea').replaceChildren(v);v.play().catch(()=>{})}
+render();
+</script>
+</body></html>
